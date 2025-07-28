@@ -1,0 +1,6 @@
+@ms_transaccion_HostAddress = http://localhost:5003
+
+GET {{ms_transaccion_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

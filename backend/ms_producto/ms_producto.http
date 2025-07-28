@@ -1,0 +1,6 @@
+@ms_producto_HostAddress = http://localhost:5068
+
+GET {{ms_producto_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

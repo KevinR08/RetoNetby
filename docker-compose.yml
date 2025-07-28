@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: KrivMau08@
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    #healthcheck:
+    #  test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "KrivMau08@", "-Q", "SELECT 1"]
+    #  interval: 10s
+    #  retries: 10
+
+  productos:
+    build: ./backend/ms_producto
+    ports:
+      - "9001:80"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=GestionInventario;User Id=sa;Password=KrivMau08@"
+
+  transacciones:
+    build: ./backend/ms_transaccion
+    ports:
+      - "9002:80"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=GestionInventario;User Id=sa;Password=KrivMau08@"
+
+  frontend:
+    build: ./frontend/gestion
+    ports:
+      - "9003:80"
+    depends_on:
+      - productos
+      - transacciones
+
+volumes:
+  mssql_data:

@@ -1,0 +1,7 @@
+.git
+**/obj
+**/bin
+**/node_modules
+.vscode
+.dockerignore
+.gitignore

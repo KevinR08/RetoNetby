@@ -4570,25 +4570,26 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.AspNetCore.OpenApi >= 8.0.18",
+      "Microsoft.EntityFrameworkCore >= 8.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.5",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\krivadeneira\\.nuget\\packages\\": {}
+    "/root/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\krivadeneira\\Downloads\\TestNetBy\\backend\\ms_producto\\ms_producto.csproj",
+      "projectUniqueName": "/src/ms_producto.csproj",
       "projectName": "ms_producto",
-      "projectPath": "C:\\Users\\krivadeneira\\Downloads\\TestNetBy\\backend\\ms_producto\\ms_producto.csproj",
-      "packagesPath": "C:\\Users\\krivadeneira\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\krivadeneira\\Downloads\\TestNetBy\\backend\\ms_producto\\obj\\",
+      "projectPath": "/src/ms_producto.csproj",
+      "packagesPath": "/root/.nuget/packages/",
+      "outputPath": "/src/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\krivadeneira\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/root/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4620,6 +4621,10 @@
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[8.0.18, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[8.0.5, )"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
@@ -4655,7 +4660,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.412/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

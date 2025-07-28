@@ -1,0 +1,26 @@
+# docker-compose.dev.yaml
+services:
+  productos:
+    build:
+      context: ./backend/ms_producto
+      dockerfile: Dockerfile.dev          # usa la versión con dotnet watch
+    volumes:
+      - ./backend/ms_producto:/src        # monta tu código dentro del contenedor
+    ports:
+      - "9001:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=GestionInventario;User Id=sa;Password=${DB_SA_PASSWORD};TrustServerCertificate=True      
+
+  transacciones:
+    build:
+      context: ./backend/ms_transaccion
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/ms_transaccion:/src
+    ports:
+      - "9002:8080"
+    depends_on:
+      - sqlserver
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=GestionInventario;User Id=sa;Password=${DB_SA_PASSWORD};TrustServerCertificate=True
+      - Servicios__Productos=http://productos:8080

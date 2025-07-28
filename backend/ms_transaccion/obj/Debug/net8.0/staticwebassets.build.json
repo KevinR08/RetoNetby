@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "QbZXUophiHqYOe3YPGig+V/+he3yMMMs55aqxFeebuw=",
+  "Source": "ms_transaccion",
+  "BasePath": "_content/ms_transaccion",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

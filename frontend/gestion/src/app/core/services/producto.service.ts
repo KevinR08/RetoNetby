@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environment';
-import { Producto } from '../models/producto.model';   // 👈 usa modelo común
+import { Producto } from '../models/producto.model';  
 
 @Injectable({ providedIn: 'root' })
 export class ProductoService {
@@ -19,7 +19,7 @@ export class ProductoService {
     }
 
     update(id: string | number, data: Producto): Observable<void> {
-        const numId = +id;                       // 👈 fuerza a number
+        const numId = +id;                       
         return this.http.put<void>(`${this.apiUrl}/${numId}`, data);
     }
 

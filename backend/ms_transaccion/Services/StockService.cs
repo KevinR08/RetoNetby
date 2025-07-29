@@ -1,52 +1,58 @@
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace ms_transaccion.Services;
-
-public class StockService
+namespace ms_transaccion.Services
 {
-    private readonly IHttpClientFactory _httpFactory;
-    private readonly string _productosApiBase;
-
-    public StockService(IHttpClientFactory httpFactory, IConfiguration cfg)
+    public class StockService
     {
-        _httpFactory = httpFactory;
-        // appsettings.json →  "Servicios": { "Productos": "http://productos" }
-        _productosApiBase = cfg["Servicios:Productos"] ?? "http://productos:8080";
+        private readonly IHttpClientFactory _httpFactory;
+        private readonly string _productosApiBase;
+
+        public StockService(IHttpClientFactory httpFactory, IConfiguration config)
+        {
+            _httpFactory = httpFactory;
+            _productosApiBase = "http://productos:8080";
+        }
+
+        public async Task<bool> AjustarStockAsync(int productoId, int cantidad, string tipo)
+        {
+            var http = _httpFactory.CreateClient();
+
+            // Obtener producto actual
+            var producto = await http.GetFromJsonAsync<ProductoDto>($"{_productosApiBase}/api/productos/{productoId}");
+            if (producto == null) return false;
+
+            if (tipo == "Venta" && producto.Stock < cantidad)
+                return false;
+
+            var nuevoStock = tipo == "Compra"
+                ? producto.Stock + cantidad
+                : producto.Stock - cantidad;
+
+            // Actualizar producto con el nuevo stock
+            var actualizar = new ProductoDto
+            {
+                Id = producto.Id,
+                Nombre = producto.Nombre,
+                Categoria = producto.Categoria,
+                Descripcion = producto.Descripcion,
+                ImagenUrl = producto.ImagenUrl,
+                Precio = producto.Precio,
+                Stock = nuevoStock
+            };
+
+            var response = await http.PutAsJsonAsync($"{_productosApiBase}/api/productos/{productoId}", actualizar);
+            return response.IsSuccessStatusCode;
+        }
     }
 
-    /// <summary>
-    /// Valida y aplica movimiento de stock en el microservicio Productos.
-    /// </summary>
-    /// <returns>True si la operación fue exitosa.</returns>
-    public async Task<bool> AjustarStockAsync(int productoId, int cantidad, string tipo)
-    {
-        using var client = _httpFactory.CreateClient("productos");
-
-        // 1) Obtener el producto actual
-        var producto = await client.GetFromJsonAsync<ProductoDto>(
-            $"{_productosApiBase}/api/Productos/{productoId}");
-
-        if (producto is null) return false;
-
-        // 2) Validación de reglas
-        if (tipo == "Venta" && producto.Stock < cantidad) return false;
-        if (cantidad <= 0) return false;
-
-        // 3) Ajuste de stock
-        producto.Stock += tipo == "Compra" ? cantidad : -cantidad;
-
-        var resp = await client.PutAsJsonAsync(
-            $"{_productosApiBase}/api/Productos/{productoId}", producto);
-
-        return resp.IsSuccessStatusCode;
-    }
-
-    // DTO mínimo para el microservicio Productos
-    private sealed class ProductoDto
+    // DTO para producto
+    public class ProductoDto
     {
         public int Id { get; set; }
-        public string Nombre { get; set; } = null!;
+        public string Nombre { get; set; } = "";
         public string? Descripcion { get; set; }
         public string? Categoria { get; set; }
         public string? ImagenUrl { get; set; }

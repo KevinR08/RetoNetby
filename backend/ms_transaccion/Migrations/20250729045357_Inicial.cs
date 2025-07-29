@@ -6,13 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ms_transaccion.Migrations
 {
     /// <inheritdoc />
-    public partial class InitTransaccion : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "transacciones");
+
             migrationBuilder.CreateTable(
                 name: "Transacciones",
+                schema: "transacciones",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -34,7 +38,8 @@ namespace ms_transaccion.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Transacciones");
+                name: "Transacciones",
+                schema: "transacciones");
         }
     }
 }

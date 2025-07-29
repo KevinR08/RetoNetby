@@ -12,14 +12,15 @@ using ms_transaccion.Data;
 namespace ms_transaccion.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250728052910_InitTransaccion")]
-    partial class InitTransaccion
+    [Migration("20250729045357_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("transacciones")
                 .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -54,7 +55,7 @@ namespace ms_transaccion.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transacciones");
+                    b.ToTable("Transacciones", "transacciones");
                 });
 #pragma warning restore 612, 618
         }

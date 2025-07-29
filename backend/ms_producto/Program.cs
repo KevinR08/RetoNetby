@@ -12,9 +12,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//documentación con Swagger
+
+
+
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .SetIsOriginAllowed(_ => true)    
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();             
+    });
+});
+
 var app = builder.Build();
 
+app.UseRouting(); 
+app.UseCors("AllowFrontend");
 
 
 // Configure the HTTP request pipeline.
@@ -24,21 +41,39 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 
 
 
-
-// 4️⃣  Endpoints
+// Endpoints
 app.MapControllers();
 
-// 5️⃣  (Opcional) aplica migraciones al arrancar
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.EnsureCreated();
-    db.Database.Migrate();
+
+    try
+    {
+        if (!db.Database.CanConnect())
+        {
+            Console.WriteLine("📦 Base de datos no existe. Creando y migrando...");
+            db.Database.Migrate();
+        }
+        else
+        {
+            Console.WriteLine("✅ Base de datos ya existe. Aplicando migraciones pendientes (si hay)...");
+            if (db.Database.GetPendingMigrations().Any())
+                db.Database.Migrate();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ Error en migración productos: {ex.Message}");
+    }
 }
 
 app.Run();

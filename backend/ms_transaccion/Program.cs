@@ -16,8 +16,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient("productos");
 builder.Services.AddScoped<StockService>();
 
-//documentación con Swagger
+//  Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .SetIsOriginAllowed(_ => true)  
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();   
+    });
+});
+
 var app = builder.Build();
+
+app.UseRouting(); 
+app.UseCors("AllowFrontend");
 
 
 
@@ -29,18 +44,48 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
-
-// 4️⃣  Endpoints
+// Endpoints
 app.MapControllers();
 
-// 5️⃣  (Opcional) aplica migraciones al arrancar
+// Migraciones
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //db.Database.EnsureCreated();
-    db.Database.Migrate();
+    try
+    {
+        var maxIntentos = 5;
+        var intentos = 0;
+        while (!db.Database.CanConnect() && intentos < maxIntentos)
+        {
+            Console.WriteLine("🕓 Esperando que la base de datos esté disponible...");
+            Thread.Sleep(3000); 
+            intentos++;
+        }
+
+        if (db.Database.CanConnect())
+        {
+            if (db.Database.GetPendingMigrations().Any())
+            {
+                Console.WriteLine("📄 Migraciones pendientes detectadas. Aplicando...");
+                db.Database.Migrate();
+            }
+        }
+        else
+        {
+            Console.WriteLine("⚠️ No se pudo conectar a la base de datos después de varios intentos.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ Error en migración transacciones: {ex.Message}");
+    }
 }
+
 
 app.Run();
 

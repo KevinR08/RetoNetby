@@ -56,7 +56,7 @@ export class ProductosComponent {
   this.productosSrv.getAll().subscribe({
     next: d => {
       this.productos = d;
-      this.filtrar(); // Aplica filtros cada vez que se carga
+      this.filtrar(); 
     },
     error: e => this.errorToast('Error al cargar productos', e)
   });

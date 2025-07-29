@@ -1,7 +1,6 @@
 <p-toast></p-toast>
 
-
-  <div class="filtros-horizontal">
+<div class="filtros-horizontal">
   <div class="filtro-item">
     <label>Nombre</label>
     <input pInputText [(ngModel)]="filtro.nombre" (ngModelChange)="filtrar()" placeholder="Buscar nombre..." />
@@ -12,21 +11,18 @@
     <input pInputText [(ngModel)]="filtro.categoria" (ngModelChange)="filtrar()" placeholder="Buscar categoría..." />
   </div>
 
-
-  <!-- Puedes incluir más filtros si quieres -->
 </div>
 
-<!-- Botón flotante -->
+<!-- Agregar nuevo producto -->
 <button pButton icon="pi pi-plus" class="p-button-rounded p-button-lg p-button-primary fab" pTooltip="Nuevo producto"
   (click)="abrirNuevo()"></button>
 
-<!-- Diálogo de formulario -->
+<!-- Formulario de transacciones -->
 <p-dialog header="{{ modo==='nuevo' ? 'Nuevo producto' : 'Editar producto' }}" [(visible)]="dialogoVisible"
   [modal]="true" [dismissableMask]="true" [style]="{ width: '40rem' }" [baseZIndex]="10000">
 
   <form class="p-fluid p-formgrid p-grid p-mt-1 p-px-2" #formulario="ngForm" (ngSubmit)="guardar()" novalidate>
 
-    <!-- ID solo en edición -->
     <div class="p-field p-col-12 p-md-6" *ngIf="modo === 'editar'">
       <label for="id">ID</label>
       <input id="id" pInputText [(ngModel)]="form.id" name="id" disabled />
@@ -66,7 +62,6 @@
       <input id="imagenUrl" type="url" pInputText [(ngModel)]="form.imagenUrl" name="imagenUrl"
         placeholder="https://..." pattern="https?://.+" autocomplete="off" required />
 
-      <!-- Previsualización -->
       <div *ngIf="form.imagenUrl && form.imagenUrl.startsWith('http')" class="p-mt-2">
         <img [src]="form.imagenUrl" alt="Vista previa" width="120" height="120"
           style="object-fit: cover; border-radius: 8px;" />
@@ -84,8 +79,9 @@
 </p-dialog>
 
 
-<!-- Tabla -->
-<p-table [value]="productosFiltrados" [paginator]="true" [rows]="5" responsiveLayout="scroll" class="p-datatable-sm">
+<!-- Listado de transacciones -->
+<p-table [value]="productosFiltrados" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+  responsiveLayout="scroll" class="p-datatable-sm">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
@@ -105,12 +101,9 @@
       <td>{{ p.descripcion }}</td>
       <td>{{ p.categoria }}</td>
       <td>
-  <img *ngIf="p.imagenUrl?.startsWith('http')" 
-       [src]="p.imagenUrl" 
-       alt="img"
-       width="40" height="40"
-       style="object-fit: cover; border-radius: 4px;" />
-</td>
+        <img *ngIf="p.imagenUrl?.startsWith('http')" [src]="p.imagenUrl" alt="img" width="40" height="40"
+          style="object-fit: cover; border-radius: 4px;" />
+      </td>
       <td>{{ p.precio | currency:'USD' }}</td>
       <td>{{ p.stock }}</td>
       <td>

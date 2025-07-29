@@ -9,4 +9,11 @@ public class ApplicationDbContext : DbContext
         : base(options) { }
 
     public DbSet<Transaccion> Transacciones => Set<Transaccion>();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Esto asegura que todas las tablas estén bajo el esquema "transacciones"
+        modelBuilder.HasDefaultSchema("transacciones");
+    }
 }

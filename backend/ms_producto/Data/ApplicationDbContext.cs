@@ -9,4 +9,10 @@ public class ApplicationDbContext : DbContext
         : base(options) { }
 
     public DbSet<Producto> Productos => Set<Producto>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema("productos");
+    }
 }

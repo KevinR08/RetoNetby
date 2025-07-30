@@ -19,3 +19,54 @@
   justify-content: flex-end;
   margin-bottom: 1.5rem;
 }
+
+.fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1050;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.p-dialog {
+  .p-dialog-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  .p-field {
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: #333;
+    }
+
+    input,
+    textarea,
+    .p-dropdown,
+    .p-inputnumber {
+      width: 100%;
+    }
+
+    .p-dropdown {
+      font-size: 0.95rem;
+    }
+  }
+
+  .botones {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+
+    button {
+      min-width: 120px;
+    }
+  }
+}

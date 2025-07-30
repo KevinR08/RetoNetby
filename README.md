@@ -115,7 +115,7 @@ Se generan control de validaciones para que los usuarios visualicen mensajes de 
 
 * **Visualización de formulario con detalle o consulta extendida**
 
-  ![Consulta formulario](./evidencias/detalle-transaccion.png)
+  ![Consulta formulario](./evidencias/detalle_transaccion.png)
 
 ---
 

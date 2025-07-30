@@ -37,7 +37,7 @@
   (click)="abrir()"></button>
 
 <!-- Formulario de transacciones-->
-<p-dialog [(visible)]="dialogoVisible" [modal]="true" header="Registrar transacción" [style]="{width:'30rem'}">
+<p-dialog [(visible)]="dialogoVisible" [modal]="true" header="{{ modo==='nuevo' ? 'Registrar transacción' : 'Editar transacción' }}" [style]="{width:'30rem'}">
   <form class="p-fluid" (ngSubmit)="guardar()">
 
     <div class="p-field">

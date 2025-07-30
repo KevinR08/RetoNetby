@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS testrunner
+
+WORKDIR /src
+
+COPY ./ms_producto ./ms_producto
+COPY ./ms_producto.Tests ./ms_producto.Tests
+
+WORKDIR /src/ms_producto.Tests
+
+RUN dotnet restore ms_producto.Tests.csproj
+
+# Ejecutar pruebas
+CMD ["dotnet", "test", "--no-build", "--verbosity", "normal"]

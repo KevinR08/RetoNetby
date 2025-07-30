@@ -45,6 +45,8 @@ export class TransaccionesComponent {
   };
 
   form: Transaccion = this.vacio();
+  detalleVisible = false;
+  transaccionSeleccionada: Transaccion | null = null;
 
   constructor(
     private transacSrv: TransaccionService,
@@ -65,6 +67,10 @@ export class TransaccionesComponent {
     };
   }
 
+  ver(t: Transaccion) {
+    this.transaccionSeleccionada = t;
+    this.detalleVisible = true;
+  }
   buscar() {
     const { productoId, tipo, inicio, fin } = this.filtro;
     this.transacSrv.getAll({
@@ -153,8 +159,13 @@ export class TransaccionesComponent {
     this.dialogoVisible = false;
   }
 
-  private cerrarYCargar() {
+  cerrarYCargar() {
     this.cerrar();
     this.buscar();
+  }
+
+  obtenerNombreProducto(id: number | string | undefined): string {
+    const producto = this.productos.find(p => p.id?.toString() === id?.toString());
+    return producto?.nombre || 'N/A';
   }
 }

@@ -9,7 +9,7 @@ Este proyecto permite gestionar productos y transacciones de forma dinámica con
 
 Instalación previa de Docker
 
-* [Docker y Docker Compose](https://docs.docker.com/get-docker/)
+* [Docker](https://docs.docker.com/get-docker/)
 
 
 ---
@@ -24,10 +24,10 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 Servicios expuestos:
 
-**Frontend (Angular dev)**: [http://localhost:4201](http://localhost:4201)
-**Microservicio de Productos**: [http://localhost:9001](http://localhost:9001)
-*Microservicio de Transacciones**: [http://localhost:9002](http://localhost:9002)
-**Base de datos (SQL Server)**: `localhost:1433`
+- **Frontend (Angular dev)**: [http://localhost:4201](http://localhost:4201)
+- **Microservicio de Productos**: [http://localhost:9001](http://localhost:9001)
+- **Microservicio de Transacciones**: [http://localhost:9002](http://localhost:9002)
+- **Base de datos (SQL Server)**: `localhost:1433`
 
 
 ---
@@ -59,8 +59,9 @@ La documentación se encuentra disponible en los siguientes enlaces:
 Se generan control de validaciones para que los usuarios visualicen mensajes de éxito, alerta o error usando Toast:
     - Cuando un usuario quiere vender más del stock existente del producto
     - Cuando existen campos vacíos
-    - Los elementos controlan directamente el tipo de dato a ingresar
-    - Se actualiza el stock del producto consumiendo el microservicio desde ms_transaccion, asegurando que siempre se mantenga coherencia entre los registros
+    - Ingresos de texto en campos numéricos
+    - Control de valores negativos
+    - Se actualiza el stock del producto consumiendo el microservicio desde ms_transaccion, asegurando que siempre se mantenga coherencia entre los registros(En todas las operaciones CRUD)
 
 ---
 
@@ -114,9 +115,28 @@ Se generan control de validaciones para que los usuarios visualicen mensajes de 
 
 * **Visualización de formulario con detalle o consulta extendida**
 
-  ![Consulta formulario](./evidencias/consulta-formulario.png)
+  ![Consulta formulario](./evidencias/detalle_transacción.png)
 
 ---
 
+### Toast para notificación de errores o éxitos
 
+* **Errores por ventas de stock superiores al existente del producto**
+
+  ![Control de stock en transacciones](./evidencias/toast_controlStock.png)
+
+
+* **Notificaciones al ejecutar operaciones CRUD**
+
+  ![Notificación CRUD](./evidencias/toast-notificacionCrud1.png)
+  ![Notificación CRUD](./evidencias/toast-notificacionCrud2.png)
+
+
+* **Paginación backend y frontend**
+
+  ![Paginación](./evidencias/paginacion.png)
+
+* **Pruebas unitarias por microservicio**
+  Se crearon pruebas unitarias por microservicio con xUnit, apalancadas con SQLite con información en memoria para no afectar la base de datos real y mantener la integralidad de los datos y servicios.
+  ![Pruebas unitarias](./evidencias/PruebasUnitarias.png)
 

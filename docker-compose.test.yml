@@ -1,0 +1,8 @@
+# docker-compose.test.yml
+version: '3.8'
+
+services:
+  test-productos:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test

@@ -41,6 +41,9 @@ export class ProductosComponent {
   };
   productosFiltrados: Producto[] = [];
 
+
+
+
   constructor(
     private productosSrv: ProductoService,
     private toast: MessageService

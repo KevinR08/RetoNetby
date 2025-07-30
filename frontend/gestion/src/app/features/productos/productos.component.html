@@ -17,7 +17,6 @@
 <button pButton icon="pi pi-plus" class="p-button-rounded p-button-lg p-button-primary fab" pTooltip="Nuevo producto"
   (click)="abrirNuevo()"></button>
 
-<!-- Formulario de transacciones -->
 <p-dialog header="{{ modo==='nuevo' ? 'Nuevo producto' : 'Editar producto' }}" [(visible)]="dialogoVisible"
   [modal]="true" [dismissableMask]="true" [style]="{ width: '40rem' }" [baseZIndex]="10000">
 
@@ -40,36 +39,38 @@
 
     <div class="p-field p-col-12 p-md-6">
       <label for="precio">Precio</label>
-      <p-inputNumber [(ngModel)]="form.precio" name="precio" mode="decimal" minFractionDigits="2" maxFractionDigits="2"
-        inputId="precio" [min]="0" required [useGrouping]="false" placeholder="Ej: 25.50">
+      <p-inputNumber [(ngModel)]="form.precio" name="precio" mode="decimal" minFractionDigits="2"
+        maxFractionDigits="2" inputId="precio" [min]="0" required [useGrouping]="false"
+        placeholder="Ej: 25.50">
       </p-inputNumber>
     </div>
 
     <div class="p-field p-col-12 p-md-6">
       <label for="stock">Stock</label>
-      <p-inputNumber [(ngModel)]="form.stock" name="stock" mode="decimal" minFractionDigits="0" maxFractionDigits="0"
-        inputId="stock" [min]="0" required [useGrouping]="false" placeholder="Ej: 10">
+      <p-inputNumber [(ngModel)]="form.stock" name="stock" mode="decimal" minFractionDigits="0"
+        maxFractionDigits="0" inputId="stock" [min]="0" required [useGrouping]="false" placeholder="Ej: 10">
       </p-inputNumber>
     </div>
 
     <div class="p-field p-col-12">
       <label for="descripcion">Descripción</label>
-      <textarea id="descripcion" pInputText rows="2" [(ngModel)]="form.descripcion" name="descripcion"></textarea>
+      <textarea id="descripcion" pInputText rows="3" [(ngModel)]="form.descripcion" name="descripcion"
+        placeholder="Descripción del producto..."></textarea>
     </div>
 
     <div class="p-field p-col-12">
       <label for="imagenUrl">URL Imagen</label>
       <input id="imagenUrl" type="url" pInputText [(ngModel)]="form.imagenUrl" name="imagenUrl"
         placeholder="https://..." pattern="https?://.+" autocomplete="off" required />
+    </div>
 
-      <div *ngIf="form.imagenUrl && form.imagenUrl.startsWith('http')" class="p-mt-2">
-        <img [src]="form.imagenUrl" alt="Vista previa" width="120" height="120"
-          style="object-fit: cover; border-radius: 8px;" />
-      </div>
+    <div class="p-col-12" *ngIf="form.imagenUrl && form.imagenUrl.startsWith('http')">
+      <img [src]="form.imagenUrl" alt="Vista previa" width="120" height="120"
+        style="object-fit: cover; border-radius: 8px;" />
     </div>
 
     <!-- Botones -->
-    <div class="p-col-12 p-d-flex p-jc-end p-mt-2">
+    <div class="p-col-12 p-d-flex p-jc-end p-mt-3">
       <button pButton label="Cancelar" class="p-button-text" (click)="cerrar()" type="button"></button>
       <button pButton label="Guardar" icon="pi pi-check" class="p-ml-2" type="submit"
         [disabled]="formulario.invalid"></button>
@@ -77,6 +78,7 @@
 
   </form>
 </p-dialog>
+
 
 
 <!-- Listado de transacciones -->

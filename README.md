@@ -115,7 +115,7 @@ Se generan control de validaciones para que los usuarios visualicen mensajes de 
 
 * **Visualización de formulario con detalle o consulta extendida**
 
-  ![Consulta formulario](./evidencias/detalle_transacción.png)
+  ![Consulta formulario](./evidencias/detalle-transaccion.png)
 
 ---
 
@@ -123,7 +123,7 @@ Se generan control de validaciones para que los usuarios visualicen mensajes de 
 
 * **Errores por ventas de stock superiores al existente del producto**
 
-  ![Control de stock en transacciones](./evidencias/toast_controlStock.png)
+  ![Control de stock en transacciones](./evidencias/toast-controlStock.png)
 
 
 * **Notificaciones al ejecutar operaciones CRUD**
